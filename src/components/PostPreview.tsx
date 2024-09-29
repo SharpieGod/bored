@@ -7,6 +7,8 @@ import { api } from "~/trpc/react";
 import Throbber from "./Throbber";
 import { useRouter } from "next/navigation";
 import Reply from "./Reply";
+import Link from "next/link";
+import Image from "next/image";
 
 interface PostPreviewProps {
   id: string;
@@ -105,29 +107,46 @@ const PostPreview: FC<PostPreviewProps> = ({ id, user }) => {
     <Throbber />
   ) : (
     <div className="flex flex-col gap-8">
-      <div className="mx-auto mt-8 flex w-3/5 flex-col gap-4 rounded-xl bg-primary-900/50 p-4">
-        <h1 className="text-3xl">{post?.title}</h1>
+      <div className="mx-auto mt-8 flex w-3/5 flex-col gap-2 rounded-xl bg-primary-900/50 p-4">
+        <h1 className="text-2xl">{post?.title}</h1>
         <p>{post?.text}</p>
-        <div className="flex justify-end">
-          {user && (
-            <div className="flex items-center justify-center gap-2">
-              <button
-                onClick={() =>
-                  likePost({
-                    id: post?.id ?? "",
-                    like: post?.likes.length === 0,
-                  })
-                }
-              >
-                <Heart
-                  className={cn({
-                    "text-red-500": (post?.likes.length ?? 0) > 0,
-                  })}
-                />
-              </button>
-              <span>{post?._count.likes}</span>
-            </div>
-          )}
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-1">
+            <Link
+              href={`/account/${user.id}`}
+              className="flex items-center gap-2"
+            >
+              <Image
+                src={user.image ?? ""}
+                alt={user.name ?? ""}
+                width={36}
+                height={36}
+                className="rounded-full"
+              />
+              <div className="font-bold opacity-80">{user.name}</div>
+            </Link>
+          </div>
+          <div className="flex justify-end">
+            {user && (
+              <div className="flex items-center justify-center gap-2">
+                <button
+                  onClick={() =>
+                    likePost({
+                      id: post?.id ?? "",
+                      like: post?.likes.length === 0,
+                    })
+                  }
+                >
+                  <Heart
+                    className={cn({
+                      "text-red-500": (post?.likes.length ?? 0) > 0,
+                    })}
+                  />
+                </button>
+                <span>{post?._count.likes}</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <form className="mx-auto w-3/5" onSubmit={handleCommentSubmit}>

@@ -1,5 +1,6 @@
 import { Post, User } from "@prisma/client";
 import { Heart } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { type FC } from "react";
 import { cn } from "~/lib/utils";
@@ -55,25 +56,42 @@ const PostDisplay: FC<PostDisplayProps> = ({ post, user }) => {
 
   return (
     <div className="flex flex-col gap-4 rounded-xl bg-primary-900/50 p-4">
-      <Link href={`/post/${post.id}`} className="flex flex-col gap-4">
+      <Link href={`/post/${post.id}`} className="flex flex-col gap-2">
         <h1 className="text-2xl">{post.title}</h1>
         <p>{post.text}</p>
       </Link>
-      <div className="flex items-center justify-end">
-        {user && (
-          <div className="flex items-center justify-center gap-2">
-            <button
-              onClick={() =>
-                likePost({ id: post.id, like: post.likes.length === 0 })
-              }
-            >
-              <Heart
-                className={cn({ "text-red-500": post.likes.length > 0 })}
-              />
-            </button>
-            <span>{post._count.likes}</span>
-          </div>
-        )}
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-1">
+          <Link
+            href={`/account/${user.id}`}
+            className="flex items-center gap-2"
+          >
+            <Image
+              src={user.image ?? ""}
+              alt={user.name ?? ""}
+              width={36}
+              height={36}
+              className="rounded-full"
+            />
+            <div className="font-bold opacity-80">{user.name}</div>
+          </Link>
+        </div>
+        <div className="flex items-center justify-end">
+          {user && (
+            <div className="flex items-center justify-center gap-2">
+              <button
+                onClick={() =>
+                  likePost({ id: post.id, like: post.likes.length === 0 })
+                }
+              >
+                <Heart
+                  className={cn({ "text-red-500": post.likes.length > 0 })}
+                />
+              </button>
+              <span>{post._count.likes}</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

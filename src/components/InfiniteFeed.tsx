@@ -41,7 +41,7 @@ const InfiniteFeed: FC<InfiniteFeedProps> = ({ user }) => {
       pullDownToRefresh
       pullDownToRefreshThreshold={50}
     >
-      <div className="mx-auto flex w-2/5 flex-col gap-8">
+      <div className="mx-auto flex flex-col gap-8">
         {items.map((item) => (
           <PostDisplay key={item.id} post={item} user={user} />
         ))}

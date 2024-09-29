@@ -19,7 +19,9 @@ const Home = async () => {
         students.
       </h1>
       {session && <PostInput />}
-      <InfiniteFeed user={session?.user as User} />
+      <div className="mx-auto w-2/5">
+        <InfiniteFeed user={session?.user as User} />
+      </div>
     </div>
   );
 };

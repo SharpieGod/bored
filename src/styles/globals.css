@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#special {
+  clip-path: polygon(14% 0, 100% 0, 86% 100%, 0% 100%);
+}
+hr {
+  @apply text-text-50/50;
+}

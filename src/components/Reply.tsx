@@ -30,32 +30,35 @@ const Reply: FC<ReplyProps> = ({ reply }) => {
       animate={{ opacity: 1, height: "auto" }}
       className="flex flex-col gap-4 rounded-xl bg-primary-800 bg-opacity-20 p-4"
     >
-      <div className="flex flex-col gap-1">
-        <Link
-          href={`/account/${reply.user.id}`}
-          className="flex items-center gap-2"
-        >
-          <Image
-            src={reply.user.image ?? ""}
-            alt={reply.user.name ?? ""}
-            width={36}
-            height={36}
-            className="rounded-full"
-          />
-          <div className="font-bold opacity-80">{reply.user.name}</div>
-        </Link>
-        <span>{reply.text}</span>
-      </div>
-      <div className="">
-        <button
-          onClick={() => {
-            setReplyOpen(!replyOpen);
-            inputRef.current?.focus();
-          }}
-        >
-          <MessageCircle />
-        </button>
-
+      <div>
+        <div className="flex items-end justify-between">
+          <div className="flex flex-col gap-1">
+            <Link
+              href={`/account/${reply.user.id}`}
+              className="flex items-center gap-2"
+            >
+              <Image
+                src={reply.user.image ?? ""}
+                alt={reply.user.name ?? ""}
+                width={36}
+                height={36}
+                className="rounded-full"
+              />
+              <div className="font-bold opacity-80">{reply.user.name}</div>
+            </Link>
+            <span>{reply.text}</span>
+          </div>
+          <div className="">
+            <button
+              onClick={() => {
+                setReplyOpen(!replyOpen);
+                inputRef.current?.focus();
+              }}
+            >
+              <MessageCircle />
+            </button>
+          </div>
+        </div>
         <motion.div
           initial={{ height: 0 }}
           animate={{ height: replyOpen ? "auto" : 0 }}
@@ -86,14 +89,14 @@ const Reply: FC<ReplyProps> = ({ reply }) => {
             <hr />
           </form>
         </motion.div>
-        {reply.children.length > 0 && (
-          <div className="flex flex-col gap-4 p-4">
-            {reply.children.map((child) => (
-              <Reply key={child.id} reply={child} />
-            ))}
-          </div>
-        )}
       </div>
+      {reply.children.length > 0 && (
+        <div className="flex flex-col gap-4 p-4">
+          {reply.children.map((child) => (
+            <Reply key={child.id} reply={child} />
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 };

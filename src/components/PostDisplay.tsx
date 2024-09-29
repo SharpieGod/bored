@@ -1,14 +1,15 @@
 import { Post, User } from "@prisma/client";
-import { Heart } from "lucide-react";
+import { Heart, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { type FC } from "react";
 import { cn } from "~/lib/utils";
 import { api } from "~/trpc/react";
+import DarkoButton from "./Darko/DarkoButton";
 
 interface PostDisplayProps {
   post: Post & {
-    _count: { likes: number };
+    _count: { likes: number; replies: number };
     originalPoster: User;
     likes: User[];
   };
@@ -79,10 +80,19 @@ const PostDisplay: FC<PostDisplayProps> = ({ post, user }) => {
             </div>
           </Link>
         </div>
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-end gap-6">
+          <div className="flex items-center justify-center gap-2">
+            <Link href={`/post/${post.id}`}>
+              <DarkoButton className="p-2">
+                <MessageCircle />
+              </DarkoButton>
+            </Link>
+            <span>{post._count.replies}</span>
+          </div>
           {user && (
             <div className="flex items-center justify-center gap-2">
-              <button
+              <DarkoButton
+                className="p-2"
                 onClick={() =>
                   likePost({ id: post.id, like: post.likes.length === 0 })
                 }
@@ -90,7 +100,7 @@ const PostDisplay: FC<PostDisplayProps> = ({ post, user }) => {
                 <Heart
                   className={cn({ "text-red-500": post.likes.length > 0 })}
                 />
-              </button>
+              </DarkoButton>
               <span>{post._count.likes}</span>
             </div>
           )}

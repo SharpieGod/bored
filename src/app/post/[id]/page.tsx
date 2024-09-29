@@ -11,6 +11,10 @@ interface PostPageProps {
 const PostPage: FC<PostPageProps> = async ({ params: { id } }) => {
   const session = await getServerAuthSession();
 
+  if (!session) {
+    return;
+  }
+
   return (
     <div>
       <Navbar />

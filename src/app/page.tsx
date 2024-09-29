@@ -9,7 +9,7 @@ const Home = async () => {
   const session = await getServerAuthSession();
 
   return (
-    <div>
+    <div className="w-full">
       <Navbar />
       <h1 className="relative py-16 text-center text-4xl font-bold text-text-50/90">
         The only board for{" "}
@@ -18,10 +18,18 @@ const Home = async () => {
         </span>{" "}
         students.
       </h1>
-      {session && <PostInput />}
-      <div className="mx-auto w-2/5">
-        <InfiniteFeed user={session?.user as User} />
-      </div>
+      {session ? (
+        <>
+          <PostInput />{" "}
+          <div className="mx-auto w-2/5">
+            <InfiniteFeed user={session?.user as User} />
+          </div>
+        </>
+      ) : (
+        <span className="mx-auto block w-full text-center">
+          Log in to see the feed...
+        </span>
+      )}
     </div>
   );
 };

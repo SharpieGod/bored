@@ -27,7 +27,9 @@ const InfiniteFeed: FC<InfiniteFeedProps> = ({ user }) => {
   const isLoadingMore = isFetching && items.length > 0;
 
   return isLoading ? (
-    <Throbber />
+    <div className="mt-6">
+      <Throbber />
+    </div>
   ) : (
     <InfiniteScroll
       dataLength={items.length}

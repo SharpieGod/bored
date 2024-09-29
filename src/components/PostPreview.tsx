@@ -104,7 +104,9 @@ const PostPreview: FC<PostPreviewProps> = ({ id, user }) => {
   }, [post?.replies]);
 
   return isLoading || isPending || isError ? (
-    <Throbber />
+    <div className="mt-6">
+      <Throbber />
+    </div>
   ) : (
     <div className="flex flex-col gap-8">
       <div className="mx-auto mt-8 flex w-3/5 flex-col gap-4 rounded-xl bg-primary-900/50 p-4">

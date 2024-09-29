@@ -20,7 +20,9 @@ const UserPreview: FC<UserPreviewProps> = ({ id }) => {
   }
 
   return isLoading ? (
-    <Throbber />
+    <div className="mt-6">
+      <Throbber />
+    </div>
   ) : (
     <div className="mx-auto mt-8 flex w-3/5 flex-col">
       <div className="flex items-center gap-4">

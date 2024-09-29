@@ -16,7 +16,6 @@ const InfiniteFeed: FC<InfiniteFeedProps> = ({ user }) => {
       {
         limit: 10,
       },
-
       {
         getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
       },
@@ -24,13 +23,16 @@ const InfiniteFeed: FC<InfiniteFeedProps> = ({ user }) => {
 
   const items = data?.pages.flatMap((page) => page.posts) ?? [];
 
+  // Adding a loading state for smoother experience
+  const isLoadingMore = isFetching && items.length > 0;
+
   return isLoading ? (
     <Throbber />
   ) : (
     <InfiniteScroll
       dataLength={items.length}
       next={fetchNextPage}
-      hasMore={!!hasNextPage}
+      hasMore={!!hasNextPage && !isLoadingMore}
       loader={<Throbber />}
       endMessage={
         <p className="py-8 text-center">
@@ -40,12 +42,20 @@ const InfiniteFeed: FC<InfiniteFeedProps> = ({ user }) => {
       refreshFunction={refetch}
       pullDownToRefresh
       pullDownToRefreshThreshold={50}
+      pullDownToRefreshContent={
+        <h3 style={{ textAlign: "center" }}>Pull down to refresh</h3>
+      }
+      releaseToRefreshContent={
+        <h3 style={{ textAlign: "center" }}>Release to refresh</h3>
+      }
+      className=""
     >
       <div className="mx-auto flex flex-col gap-8">
         {items.map((item) => (
           <PostDisplay key={item.id} post={item} user={user} />
         ))}
       </div>
+      {isLoadingMore && <Throbber />} {/* Show loader while fetching more */}
     </InfiniteScroll>
   );
 };

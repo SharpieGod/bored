@@ -63,17 +63,19 @@ const PostDisplay: FC<PostDisplayProps> = ({ post, user }) => {
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">
           <Link
-            href={`/account/${user.id}`}
+            href={`/account/${post.originalPoster.id}`}
             className="flex items-center gap-2"
           >
             <Image
-              src={user.image ?? ""}
-              alt={user.name ?? ""}
+              src={post.originalPoster.image ?? ""}
+              alt={post.originalPoster.name ?? ""}
               width={36}
               height={36}
               className="rounded-full"
             />
-            <div className="font-bold opacity-80">{user.name}</div>
+            <div className="font-bold opacity-80">
+              {post.originalPoster.name}
+            </div>
           </Link>
         </div>
         <div className="flex items-center justify-end">

@@ -40,7 +40,6 @@ const PostDisplay: FC<PostDisplayProps> = ({ post, user }) => {
                 ? [...post.likes, user] // Add the user if liking
                 : post.likes.filter((like) => like.id !== user.id); // Remove the user if unliking
 
-              utils.post.getPost.invalidate({ id: post.id });
               return {
                 ...post,
                 _count: {
@@ -53,6 +52,9 @@ const PostDisplay: FC<PostDisplayProps> = ({ post, user }) => {
           })),
         };
       });
+    },
+    onSuccess: async () => {
+      await utils.post.getPost.invalidate({ id: post.id });
     },
   });
 

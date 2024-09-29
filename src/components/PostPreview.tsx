@@ -36,7 +36,6 @@ const PostPreview: FC<PostPreviewProps> = ({ id, user }) => {
           ? [...data.likes, user] // Add the user if liking
           : data.likes.filter((likeUser) => likeUser.id !== user.id); // Remove the user if unliking
 
-        utils.post.recentPosts.invalidate();
         return {
           ...data,
           _count: {
@@ -45,6 +44,9 @@ const PostPreview: FC<PostPreviewProps> = ({ id, user }) => {
           likes: updatedLikes,
         };
       });
+    },
+    onSuccess: async () => {
+      await utils.post.recentPosts.invalidate();
     },
   });
 

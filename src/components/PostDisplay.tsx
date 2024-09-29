@@ -32,7 +32,7 @@ const PostDisplay: FC<PostDisplayProps> = ({ post, user }) => {
             posts: page.posts.map((post) => {
               if (post.id !== id) return post;
               // Determine the new likes count
-              const newLikesCount = post.likes.length + (like ? 1 : -1);
+              const newLikesCount = post._count.likes + (like ? 1 : -1);
 
               // Update the likes array conditionally
               const updatedLikes = like

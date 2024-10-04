@@ -1,10 +1,17 @@
 import { LoaderCircle } from "lucide-react";
-import React from "react";
+import React, { FC } from "react";
 
-const Throbber = () => {
+interface ThrobberProps {
+  size?: number;
+}
+
+const Throbber: FC<ThrobberProps> = ({ size }) => {
   return (
     <div className="flex items-center justify-center">
-      <LoaderCircle className="animate-spin" size={32} />
+      <LoaderCircle
+        className="animate-[spin_0.2s_linear_infinite]"
+        size={size}
+      />
     </div>
   );
 };

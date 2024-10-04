@@ -33,7 +33,7 @@ model Reply {
 model Post {
   id               String   @id @default(cuid())
   title            String
-  text             String
+  text             String   @db.Text
   originalPoster   User     @relation(fields: [originalPosterId], references: [id])
   originalPosterId String
   likes            User[]   @relation("PostLike")
@@ -50,12 +50,12 @@ model Account {
   type                     String
   provider                 String
   providerAccountId        String
-  refresh_token            String? // @db.Text
-  access_token             String? // @db.Text
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
   expires_at               Int?
   token_type               String?
   scope                    String?
-  id_token                 String? // @db.Text
+  id_token                 String? @db.Text
   session_state            String?
   user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   refresh_token_expires_in Int?
@@ -83,6 +83,8 @@ model User {
   likedPosts    Post[]    @relation("PostLike")
   likedReplies  Reply[]   @relation("ReplyLike")
   replies       Reply[]
+  following     User[]    @relation("Follow")
+  followers     User[]    @relation("Follow")
 }
 
 model VerificationToken {

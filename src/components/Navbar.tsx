@@ -22,7 +22,7 @@ const Navbar = async () => {
         {session?.user ? (
           <>
             <li>
-              <Link href={`/account/${session.user.id}`}>
+              <Link href={`/account`}>
                 <DarkoButton>Account</DarkoButton>
               </Link>
             </li>

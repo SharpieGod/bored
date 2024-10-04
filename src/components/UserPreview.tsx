@@ -68,7 +68,7 @@ const UserPreview: FC<UserPreviewProps> = ({ id, isMe }) => {
           >
             {followPending ? (
               <Throbber size={26} />
-            ) : (user?.followers.length ?? 0) > 0 ? (
+            ) : (user?.followers.length ?? 0) <= 0 ? (
               <>
                 <span>Follow</span>
                 <UserPlus size={22} />
